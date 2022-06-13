@@ -1,0 +1,43 @@
+'''
+
+Given an array of dependencies, find a dependency flow!
+'''
+
+from collections import defaultdict
+
+
+
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
+
+
+    def addEdge(self, vertice, value):
+        self.graph[vertice].append(value)
+
+    def isCyclic(self):
+
+        visited = [False] * len(self.graph)
+
+
+
+    def printGraph(self):
+        for i in self.graph.items():
+            print(i[0])
+
+
+def findDep(arr: list) -> list:
+
+
+    return
+
+g = Graph()
+g.addEdge(0, 1)
+g.addEdge(0, 2)
+g.addEdge(1, 2)
+g.addEdge(2, 0)
+g.addEdge(2, 3)
+g.addEdge(3, 3)
+g.printGraph()
+
+#assert findDep([[0, 1], [2, 3], [1, 2]]) == [0, 1, 2, 3]

@@ -1,0 +1,169 @@
+'''
+Given a board and an end position for the player, write a function to determine if it is possible to travel from every open cell on the board to the given end position.
+
+board1 = [
+    [ 0,  0,  0, 0, -1 ],
+    [ 0, -1, -1, 0,  0 ],
+    [ 0,  0,  0, 0,  0 ],
+    [ 0, -1,  0, 0,  0 ],
+    [ 0,  0,  0, 0,  0 ],
+    [ 0,  0,  0, 0,  0 ],
+]
+
+board2 = [
+    [  0,  0,  0, 0, -1 ],
+    [  0, -1, -1, 0,  0 ],
+    [  0,  0,  0, 0,  0 ],
+    [ -1, -1,  0, 0,  0 ],
+    [  0, -1,  0, 0,  0 ],
+    [  0, -1,  0, 0,  0 ],
+]
+
+board3 = [
+    [ 0,  0,  0,  0,  0,  0, 0 ],
+    [ 0, -1, -1, -1, -1, -1, 0 ],
+    [ 0, -1,  0,  0,  0, -1, 0 ],
+    [ 0, -1,  0,  0,  0, -1, 0 ],
+    [ 0, -1,  0,  0,  0, -1, 0 ],
+    [ 0, -1, -1, -1, -1, -1, 0 ],
+    [ 0,  0,  0,  0,  0,  0, 0 ],
+]
+
+end = (0, 0)
+
+Expected output:
+
+isReachable(board1, end) -> True
+isReachable(board2, end) -> False
+isReachable(board3, end) -> False
+
+'''
+
+board = [
+    [0, 0, 0, -1, -1],
+    [0, 0, -1, 0, 0],
+    [0, -1, 0, -1, 0],
+    [0, 0, -1, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    ]
+
+start1 = (3, 1)
+start2 = (5, 3)
+start3 = (5, 1)
+start4 = (6, 0)
+start5 = (6, 4)
+start6 = (0, 0)
+start7 = (2, 2)
+
+
+def FindLegalMoves(matrix: list, start_pos) -> list:
+    x, y = start_pos
+    legal_moves = []
+    # Up
+    if x - 1 >= 0 and matrix[x - 1][y] != -1:
+        legal_moves.append((x - 1, y))
+    
+    # down
+    if x + 1 < len(matrix) and matrix[x + 1][y] != -1:
+        legal_moves.append((x + 1, y))
+
+    # left
+    if y - 1 >= 0 and matrix[x][y - 1] != -1:
+        legal_moves.append((x, y - 1))
+
+    # right
+    if y + 1 < len(matrix[x]) and matrix[x][y + 1] != -1:
+        legal_moves.append((x, y + 1))
+    
+    return legal_moves
+
+
+print(FindLegalMoves(board, start1))
+
+print(FindLegalMoves(board, start2))
+
+print(FindLegalMoves(board, start3))
+
+print(FindLegalMoves(board, start4))
+
+print(FindLegalMoves(board, start5))
+
+print(FindLegalMoves(board, start6))
+
+print(FindLegalMoves(board, start7))
+
+board2_1 = [
+    [0, 0, 0, 0, -1],
+    [0, -1, -1, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, -1, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    ]
+
+board2_2 = [
+    [0, 0, 0, 0, -1],
+    [0, -1, -1, 0, 0],
+    [0, 0, 0, 0, 0],
+    [-1, -1, 0, 0, 0],
+    [0, -1, 0, 0, 0],
+    [0, -1, 0, 0, 0],
+    ]
+
+board2_3 = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, -1, -1, -1, -1, -1, 0],
+    [0, -1, 0, 0, 0, -1, 0],
+    [0, -1, 0, 0, 0, -1, 0],
+    [0, -1, 0, 0, 0, -1, 0],
+    [0, -1, -1, -1, -1, -1, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    ]
+
+end = (0, 0)
+
+
+def isReachable(board: list, end_pos: tuple) -> bool:
+    x, y = 0, 0
+    
+    if x + 1 < len(board) and board[x + 1][y] != -1:
+        is_reachable = helperFunction(board, end_pos, (x + 1, y), board)
+        if is_reachable:
+            return True
+    
+    if y + 1 < len(board[x]) and board[x][y + 1] != -1:
+        is_reachable = helperFunction(board, end_pos, (x, y + 1))
+        if is_reachable:
+            return True
+    
+    return False
+
+
+def helperFunction(board: list, end_pos: tuple, curr_pos: tuple,
+                   visited_board) -> bool:
+    if end_pos == curr_pos:
+        return True
+    
+    x, y = curr_pos
+    # Up
+    if x - 1 >= 0 and board[x - 1][y] != -1:
+        helperFunction(board, end_pos, (x - 1, y))
+    
+    # down
+    if x + 1 < len(board) and board[x + 1][y] != -1:
+        helperFunction(board, end_pos, (x + 1, y))
+
+    # left
+    if y - 1 >= 0 and board[x][y - 1] != -1:
+        helperFunction(board, end_pos, (x, y - 1))
+
+    # right
+    if y + 1 < len(board[x]) and board[x][y + 1] != -1:
+        helperFunction(board, end_pos, (x, y + 1))
+    
+    return False
+
+
+print(isReachable(board, (0, 0)))
